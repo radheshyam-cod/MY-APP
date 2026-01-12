@@ -31,13 +31,13 @@ interface ValidationResult {
 }
 
 const REQUIRED_VARS = [
-  'VITE_SUPABASE_URL',
-  'VITE_SUPABASE_ANON_KEY',
   'VITE_APP_ENV'
 ] as const;
 
-// VITE_API_BASE_URL is only required when not in mock mode
+// Supabase vars only required when not in mock mode
 const REQUIRED_WHEN_NOT_MOCK = [
+  'VITE_SUPABASE_URL',
+  'VITE_SUPABASE_ANON_KEY',
   'VITE_API_BASE_URL'
 ] as const;
 
@@ -56,7 +56,23 @@ export function validateEnvironment(): ValidationResult {
 
   console.log('🔍 Validating environment configuration...');
 
-  // Check required variables
+  // In mock mode, skip most environment checks
+  if (USE_MOCK) {
+    console.log('ℹ️ Mock mode enabled - using simulated data, skipping backend configuration');
+    config.VITE_APP_ENV = import.meta.env.VITE_APP_ENV || 'production';
+    config.VITE_SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://mock.supabase.co';
+    config.VITE_SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'mock-key';
+    config.VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+
+    return {
+      isValid: true,
+      errors: [],
+      warnings: ['Running in mock mode - no backend connection'],
+      config
+    };
+  }
+
+  // Check required variables (only when not in mock mode)
   for (const varName of REQUIRED_VARS) {
     const value = import.meta.env[varName];
     if (!value || value.trim() === '') {
@@ -68,20 +84,14 @@ export function validateEnvironment(): ValidationResult {
   }
 
   // Check variables that are only required when not in mock mode
-  if (!USE_MOCK) {
-    for (const varName of REQUIRED_WHEN_NOT_MOCK) {
-      const value = import.meta.env[varName];
-      if (!value || value.trim() === '') {
-        errors.push(`Missing required environment variable: ${varName}`);
-      } else {
-        config[varName] = value;
-        console.log(`✅ ${varName}: ${value.substring(0, 20)}...`);
-      }
+  for (const varName of REQUIRED_WHEN_NOT_MOCK) {
+    const value = import.meta.env[varName];
+    if (!value || value.trim() === '') {
+      errors.push(`Missing required environment variable: ${varName}`);
+    } else {
+      config[varName] = value;
+      console.log(`✅ ${varName}: ${value.substring(0, 20)}...`);
     }
-  } else {
-    // In mock mode, set a default API URL if not provided
-    config.VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
-    console.log('ℹ️ Mock mode enabled - using simulated API');
   }
 
   // Check optional variables
