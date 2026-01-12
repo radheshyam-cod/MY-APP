@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { AuthPage } from './pages/AuthPage';
 import { OnboardingPage } from './pages/OnboardingPage';
@@ -76,7 +76,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="min-h-screen bg-gray-50">
 
         <Routes>
@@ -181,7 +181,7 @@ function App() {
         <Toaster />
         {user && user.class && <AIChat />}
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
