@@ -1,0 +1,385 @@
+/* ===== BASE ANIMATIONS ===== */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes gentle-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.85;
+        transform: scale(1.02);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes success-pop {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes progress-fill {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: var(--progress, 100%);
+    }
+}
+
+@keyframes bounce-soft {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes wiggle {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-3deg);
+    }
+
+    75% {
+        transform: rotate(3deg);
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes glow-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px hsla(var(--primary), 0.15);
+    }
+
+    50% {
+        box-shadow: 0 0 30px hsla(var(--primary), 0.25);
+    }
+}
+
+/* ===== UTILITY CLASSES ===== */
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
+
+.animate-gentle-pulse {
+    animation: gentle-pulse 3s ease-in-out infinite;
+}
+
+.animate-bounce-soft {
+    animation: bounce-soft 2s ease-in-out infinite;
+}
+
+.animate-wiggle {
+    animation: wiggle 0.5s ease-in-out;
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out forwards;
+}
+
+.animate-success {
+    animation: success-pop 0.4s ease-out forwards;
+}
+
+.animate-glow {
+    animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Staggered entrance animations */
+.stagger-1 {
+    animation-delay: 0.1s;
+}
+
+.stagger-2 {
+    animation-delay: 0.2s;
+}
+
+.stagger-3 {
+    animation-delay: 0.3s;
+}
+
+.stagger-4 {
+    animation-delay: 0.4s;
+}
+
+.stagger-5 {
+    animation-delay: 0.5s;
+}
+
+/* ===== SHIMMER EFFECT ===== */
+.animate-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.animate-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    animation: shimmer 2.5s infinite;
+}
+
+/* ===== HOVER LIFT EFFECT ===== */
+.hover-lift {
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px hsla(var(--primary), 0.15);
+}
+
+.hover-lift:active {
+    transform: translateY(-2px);
+}
+
+/* ===== BUTTON GLOW EFFECT ===== */
+.btn-glow {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.btn-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, hsla(var(--primary), 0.4), hsla(270, 80%, 60%, 0.4));
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    filter: blur(12px);
+    transition: opacity 0.3s ease;
+}
+
+.btn-glow:hover::before {
+    opacity: 1;
+}
+
+.btn-glow:hover {
+    transform: translateY(-2px);
+}
+
+/* ===== CARD FOCUS PULSE ===== */
+.card-focus-pulse {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-focus-pulse:hover,
+.card-focus-pulse:focus-within {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow:
+        0 16px 40px -12px hsla(var(--primary), 0.12),
+        0 0 0 1px hsla(var(--primary), 0.1);
+}
+
+/* ===== GLASS MORPHISM (Student-Friendly) ===== */
+.glass-premier {
+    background: hsla(var(--glass-bg));
+    backdrop-filter: blur(20px);
+    border: 1px solid hsla(var(--glass-border));
+    box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.06);
+}
+
+.glass-card-hover {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+    transform: translateY(-4px) scale(1.01);
+    background: hsla(var(--glass-bg), 0.9);
+    border-color: hsla(var(--primary), 0.2);
+    box-shadow:
+        0 16px 48px -12px rgba(0, 0, 0, 0.12),
+        0 0 24px hsla(var(--primary), 0.08);
+}
+
+/* ===== LEARNING PULSE BACKGROUND ===== */
+.learning-pulse-bg {
+    background: var(--gradient-warm);
+    background-size: 300% 300%;
+    animation: gradient-shift 20s ease infinite;
+}
+
+/* ===== PREMIUM TEXT GRADIENT ===== */
+.premium-text-gradient {
+    background: linear-gradient(135deg, hsl(var(--foreground)) 0%, hsla(var(--primary), 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===== SUCCESS FEEDBACK ===== */
+.success-feedback {
+    background: linear-gradient(135deg, hsl(var(--success)) 0%, hsl(160, 70%, 40%) 100%);
+    color: white;
+    animation: success-pop 0.4s ease-out;
+}
+
+/* ===== PROGRESS INDICATOR ===== */
+.progress-bar-animated {
+    position: relative;
+    height: 8px;
+    background: hsla(var(--muted));
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar-animated::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(270, 80%, 60%));
+    border-radius: 999px;
+    animation: progress-fill 1s ease-out forwards;
+}
+
+/* ===== COMPLETION CELEBRATION ===== */
+.completion-burst {
+    position: relative;
+}
+
+.completion-burst::after {
+    content: '🎉';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 24px;
+    animation: bounce-soft 1s ease-in-out infinite;
+}
+
+/* ===== SOFT SHADOWS ===== */
+.shadow-soft {
+    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-soft-lg {
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-glow-primary {
+    box-shadow: 0 8px 24px -6px hsla(var(--primary), 0.2);
+}
+
+.shadow-glow-success {
+    box-shadow: 0 8px 24px -6px hsla(var(--success), 0.25);
+}
+
+/* ===== ROUNDED COMPONENTS (16-20px) ===== */
+.rounded-friendly {
+    border-radius: 16px;
+}
+
+.rounded-friendly-lg {
+    border-radius: 20px;
+}
+
+.rounded-friendly-xl {
+    border-radius: 24px;
+}
+
+/* ===== FOCUS STATES (Accessible) ===== */
+.focus-ring {
+    outline: none;
+}
+
+.focus-ring:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+}
+
+/* ===== MOTIVATION BADGE ===== */
+.motivation-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, hsla(var(--primary), 0.1), hsla(270, 80%, 60%, 0.1));
+    border: 1px solid hsla(var(--primary), 0.15);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: hsl(var(--primary));
+    transition: all 0.3s ease;
+}
+
+.motivation-badge:hover {
+    background: linear-gradient(135deg, hsla(var(--primary), 0.15), hsla(270, 80%, 60%, 0.15));
+    transform: scale(1.02);
+}
